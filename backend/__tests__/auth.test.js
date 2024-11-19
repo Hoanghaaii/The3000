@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../server'; // Đảm bảo rằng bạn xuất khẩu `app` từ file server.js của bạn
+import app from '../server'; 
 import { User } from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
 
