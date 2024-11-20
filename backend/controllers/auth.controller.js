@@ -17,8 +17,7 @@ export const login = async (req, res)=>{
         return res.status(400).json({success: false, message: "Password was wrong!"})
     }
     const token = await generateTokenAndSetCookie(res, user._id)
-    res.status(200).json({success: true, message: "Login successfully!", token})
-   return
+    return res.status(200).json({success: true, message: "Login successfully!", token})
    } catch (error) {
         return res.status(500).json({success: false, message:"Server error", error: error.message})
    }

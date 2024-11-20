@@ -17,6 +17,7 @@ describe('Auth API', () => {
   afterAll(async () => {
     // Xóa người dùng sau khi kiểm tra xong
     await User.deleteOne({ email: 'test@example.com' });
+    await User.deleteOne({ email: 'newuser@example.com' });
   });
 
   describe('POST /api/auth/login', () => {
