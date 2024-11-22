@@ -27,8 +27,8 @@ export const login = async (req, res)=>{
 
 export const signup = async (req, res)=>{
     try {
-        const {email, password} = req.body
-        if(!email || !password){
+        const {name, email, password} = req.body
+        if(!email || !password || !name){
             return res.status(400).json({success: false, message: "Email and password are required!"})
         }
         const isExistEmail = await User.findOne({email: email});
@@ -39,6 +39,7 @@ export const signup = async (req, res)=>{
         const newUser = new User({
             email,
             password: hashedPassword,
+            name
         })
         await newUser.save()
         return res.status(201).json({success: true, message: "Sign Up Successfully!"})
@@ -93,6 +94,7 @@ export const sendVerifyEmail = async (req, res)=>{
 export const verifyEmail = async (req, res)=>{
     try {
         const {code} = req.body
+
         const user = await User.findOne({verifyCode: code, verifyCodeExpiresAt: {$gt: Date.now()}})
         if(!user){
             return res.status(400).json({success: false, message: "Can not find user or Verify Code is expired"})
