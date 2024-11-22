@@ -6,3 +6,5 @@ const productSchema = mongoose.Schema({
     price: {type: Number},
     category: {type: String}
 })
+
+export const Product = mongoose.model('Product', productSchema)
