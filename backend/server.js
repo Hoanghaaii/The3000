@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import dotenv from 'dotenv'
 import mainRouter from '../backend/routers/index.router.js'
 import { connectDB } from './db/connectDb.js';
+import cookieParser from "cookie-parser";
 dotenv.config()
 
 const app = express()
@@ -16,7 +17,7 @@ const corsOptions = {
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
 };
-
+app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));

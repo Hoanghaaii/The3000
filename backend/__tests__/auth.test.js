@@ -2,6 +2,7 @@ import request from 'supertest';
 import app from '../server'; 
 import { User } from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
+import { response } from 'express';
 
 describe('Auth API', () => {
 
