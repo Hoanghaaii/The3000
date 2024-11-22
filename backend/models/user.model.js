@@ -12,6 +12,9 @@ const userSchema = mongoose.Schema({
     level: { type: Number, default: 1 },
     experiencePoints: { type: Number, default: 0 },
     tokens: { type: Number, default: 0 },
+    isEmailVerified: {type: Boolean, default: false},
+    verifyCode: {type: String},
+    verifyCodeExpiresAt: {type: Date},
     socialLinks: {
       facebook: { type: String },
       twitter: { type: String },
