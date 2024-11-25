@@ -75,6 +75,7 @@ describe('Auth API', () => {
         .send({
           email: 'newuser@example.com',
           password: 'password123',
+          name:"testUser"
         });
       expect(response.status).toBe(201);
       expect(response.body.success).toBe(true);
@@ -87,6 +88,7 @@ describe('Auth API', () => {
         .send({
           email: 'test@example.com', // Đã tồn tại
           password: 'password123',
+          name:"testUser"
         });
       expect(response.status).toBe(400);
       expect(response.body.message).toBe('Email is already used!');
