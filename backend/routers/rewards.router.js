@@ -1,5 +1,5 @@
 import express from "express";
-import rewardsController from "../controllers/rewards.controller";
+import rewardsController from "../controllers/rewards.controller.js";
 
 const router = express.Router();
 
