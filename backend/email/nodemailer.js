@@ -153,7 +153,7 @@ export const sendResetPassword = async (email, resetLink)=>{
                             <div class="email-body">
                                 <p>Xin chào,</p>
                                 <p>Chúng tôi đã gửi link reset password, hãy nhấn vào link bên dưới để đổi mật khẩu </p>
-                                <a href="https://your-frontend-url/reset-password?token=${resetLink}" style="display: inline-block; padding: 10px 20px; color: white; background-color: #4A90E2; text-decoration: none; border-radius: 5px;">Đổi mật khẩu</a>
+                                <a href="${resetLink}" style="display: inline-block; padding: 10px 20px; color: white; background-color: #4A90E2; text-decoration: none; border-radius: 5px;">Đổi mật khẩu</a>
                                 <p>Nếu không phải bạn thực hiện yêu cầu, xin hãy bỏ qua email này.</p>
                             </div>
                             <div class="footer">
