@@ -15,6 +15,8 @@ const userSchema = mongoose.Schema({
     isEmailVerified: {type: Boolean, default: false},
     verifyCode: {type: String},
     verifyCodeExpiresAt: {type: Date},
+    resetPasswordCode: {type: String},
+    resetPasswordCodeExpiresAt: {type: Date},
     socialLinks: {
       facebook: { type: String },
       twitter: { type: String },
