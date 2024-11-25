@@ -64,6 +64,19 @@ export const getContent = async (req, res)=>{
     }
 }
 
+export const getContentById = async (req, res)=>{
+  try {
+    const {id} = req.params
+    const content = await Content.findById(id)
+    if(!content){
+      return res.status(400).json({success: false, message: "Content not found"})
+    }
+    return res.status(200).json({success: true, message: "Get content by id successfully", content: content})
+  } catch (error) {
+    return res.status(500).json({success: false, message: "Server error", error: error.message});
+  }
+}
+
 export const updateContent = async (req, res) => {
   try {
     const { id } = req.params;
