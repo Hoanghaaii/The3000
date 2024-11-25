@@ -5,7 +5,9 @@ import { createWatchHistory, updateProgressWatchHistory } from '../controllers/w
 const router = express.Router()
 
 router.post('/create-watch-history', verifyToken, createWatchHistory)
+
 router.post('/update-progress', verifyToken,updateProgressWatchHistory)
+
 router.get('/get-watch-histories')
 
 export default router
