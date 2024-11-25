@@ -3,38 +3,48 @@ import { Content } from "../models/content.model.js"
 import { uploadToCloudinary } from '../storage/cloudinary.js'; // Import hàm upload lên Cloudinary
 
 export const createContent = async (req, res) => {
-    try {
-      const { title, description, category, priceInTokens, contentType, isPublished } = req.body;
-      const { userId } = req;
-      const file = req.file;
-  
-      if (!title || !category || !contentType) {
-        return res.status(400).json({ success: false, message: "Missing fields!" });
-      }
-  
-      // Upload the file to Cloudinary
-      let uploadedImage;
-      if (file) {
-        uploadedImage = await uploadToCloudinary(file.buffer);
-      }
-      // Save content in the database
-      const newContent = new Content({
-        title,
-        description,
-        category,
-        priceInTokens,
-        contentType,
-        url: uploadedImage?.secure_url, // URL from Cloudinary
-        isPublished,
-        createdBy: userId,
-      });
-      await newContent.save();
-      return res.status(201).json({ success: true, message: "Content created successfully" , newContent});
-    } catch (error) {
-      console.error('Error creating content:', error);
-      return res.status(500).json({ success: false, message: "Server error", error: error.message });
+  try {
+    const { title, description, category, priceInTokens, contentType, isPublished, url } = req.body;
+    const { userId } = req;
+    const file = req.file;
+
+    if (!title || !category || !contentType) {
+      return res.status(400).json({ success: false, message: "Missing fields!" });
     }
-  };
+
+    // Xử lý file hoặc nội dung dạng text
+    let contentUrl;
+    if (file) {
+      // Upload file lên Cloudinary
+      const uploadedImage = await uploadToCloudinary(file.buffer);
+      contentUrl = uploadedImage?.secure_url; // URL từ Cloudinary
+    } else if (url) {
+      // Nếu không có file, lưu nội dung dạng text
+      contentUrl = url;
+    } else {
+      return res.status(400).json({ success: false, message: "No file or text content provided!" });
+    }
+
+    // Lưu nội dung vào cơ sở dữ liệu
+    const newContent = new Content({
+      title,
+      description,
+      category,
+      priceInTokens,
+      contentType,
+      url: contentUrl, // URL hoặc nội dung dạng text
+      isPublished,
+      createdBy: userId,
+    });
+    await newContent.save();
+
+    return res.status(201).json({ success: true, message: "Content created successfully", newContent });
+  } catch (error) {
+    console.error("Error creating content:", error);
+    return res.status(500).json({ success: false, message: "Server error", error: error.message });
+  }
+};
+
 
 
 export const getContent = async (req, res)=>{

@@ -1,6 +1,6 @@
-import { PurchaseHistory } from "../models/purchaseHistory.model";
-import { User } from "../models/user.model";
-import { Content } from "../models/content.model";
+
+import { User } from "../models/user.model.js";
+import { Content } from "../models/content.model.js";
 
 
 class PurchaseHistory {
