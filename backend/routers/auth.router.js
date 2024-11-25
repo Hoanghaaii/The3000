@@ -1,5 +1,5 @@
 import express from 'express'
-import { checkver, login, signup, sendVerifyEmail, verifyEmail } from '../controllers/auth.controller.js'
+import { checkver, login, signup, sendVerifyEmail, verifyEmail, updateProfile, sendResetPasswordLink, changePassword } from '../controllers/auth.controller.js'
 import { verifyToken } from '../middleware/verifyToken.js'
 import { refreshAccessToken } from '../utils/generateTokenAndSetCookie.js'
 import {uploadprofilePictureMiddleWare } from '../storage/cloudinary.js'
