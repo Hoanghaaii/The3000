@@ -45,8 +45,6 @@ export const createContent = async (req, res) => {
   }
 };
 
-
-
 export const getContent = async (req, res)=>{
     try {
         const page = parseInt(req.query.page) || 1; // Mặc định là trang 1
@@ -139,7 +137,6 @@ export const updateContent = async (req, res) => {
     });
   }
 };
-
 
 export const deleteContent = async (req, res) => {
   try {
