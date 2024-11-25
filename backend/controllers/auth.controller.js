@@ -82,7 +82,7 @@ export const sendVerifyEmail = async (req, res)=>{
         }
         const code = generateCode()
         user.verifyCode = code;
-        user.verifyCodeExpiresAt = Date.now() + 15 * 60 *1000 //verifyCode het han trong 15 phut
+        user.verifyCodeExpiresAt = Date.now() + 15  60 1000 //verifyCode het han trong 15 phut
         await user.save()
         await sendVerifyCode(user.email, code)
         return res.status(200).json({success: true,  message: "Verification email sent successfully!" });
