@@ -4,6 +4,7 @@ import { generateTokenAndSetCookie } from '../utils/generateTokenAndSetCookie.js
 import { sendResetPassword, sendVerifyCode } from '../email/nodemailer.js'
 import { generateCode } from '../utils/generateVeriryCode.js'
 import crypto from "crypto";    
+import { uploadProfilePictureToCloudinary } from '../storage/cloudinary.js'
 
 export const login = async (req, res)=>{
    try {
@@ -110,9 +111,11 @@ export const verifyEmail = async (req, res)=>{
     }
 }
 
+
 export const updateProfile = async (req, res) => {
   const { userId } = req;  // Lấy userId từ req (sau khi xác thực người dùng)
-  const { name, bio, socialLinks } = req.body;  // Lấy name và socialLinks từ yêu cầu
+  const { name, bio, socialLinks, interests } = req.body;  // Lấy name và socialLinks từ yêu cầu
+  const file = req.file;  // Lấy tệp ảnh từ yêu cầu (thường dùng `multer` để xử lý file upload)
 
   try {
     const user = await User.findById(userId);
@@ -120,10 +123,19 @@ export const updateProfile = async (req, res) => {
       return res.status(400).json({ success: false, message: "User not found" });
     }
 
-    // Cập nhật thông tin người dùng
+    let imageUrl;
+
+    // Nếu có tệp ảnh gửi lên, tải lên Cloudinary
+    if (file) {
+      imageUrl = await uploadProfilePictureToCloudinary(file.buffer);  // Upload ảnh và nhận URL từ Cloudinary
+      user.profilePicture = imageUrl?.secure_url;  // Cập nhật URL ảnh vào thông tin người dùng
+    }
+
+    // Cập nhật thông tin người dùng (name, bio, socialLinks, interests)
     if (name) user.name = name;
-    if(bio) user.bio = bio
+    if (bio) user.bio = bio;
     if (socialLinks) user.socialLinks = { ...user.socialLinks, ...socialLinks };
+    if (interests) user.interests = interests;
 
     await user.save();  // Lưu thông tin người dùng vào cơ sở dữ liệu
 
@@ -133,6 +145,7 @@ export const updateProfile = async (req, res) => {
     return res.status(500).json({ success: false, message: "Server error", error: error.message });
   }
 };
+
 
 export const sendResetPasswordLink = async (req, res)=>{
     try {

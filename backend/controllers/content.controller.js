@@ -1,6 +1,6 @@
 import { Content } from "../models/content.model.js"
 
-import { uploadToCloudinary } from '../storage/cloudinary.js'; // Import hàm upload lên Cloudinary
+import { uploadContentToCloudinary } from '../storage/cloudinary.js'; // Import hàm upload lên Cloudinary
 
 export const createContent = async (req, res) => {
   try {
@@ -16,7 +16,7 @@ export const createContent = async (req, res) => {
     let contentUrl;
     if (file) {
       // Upload file lên Cloudinary
-      const uploadedImage = await uploadToCloudinary(file.buffer);
+      const uploadedImage = await uploadContentToCloudinary(file.buffer);
       contentUrl = uploadedImage?.secure_url; // URL từ Cloudinary
     } else if (url) {
       // Nếu không có file, lưu nội dung dạng text
@@ -99,7 +99,7 @@ export const updateContent = async (req, res) => {
     }
     // If a file is uploaded, send it to Cloudinary
     if (file) {
-      uploadedImage = await uploadToCloudinary(file.buffer);
+      uploadedImage = await uploadContentToCloudinary(file.buffer);
     }
 
     // Find content by ID
