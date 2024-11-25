@@ -3,9 +3,9 @@ import { WatchHistory } from "../models/watchHistory.model.js"
 export const getWatchHistoryByUserId = async (req, res)=>{
     try {
         const {userId} = req
-        const watchhistories = await WatchHistory.findOne(userId)
+        const watchhistories = await WatchHistory.find({userId: userId})
         if(!watchhistories){
-            return res.status(400).json({success: false, message: "UserID is required"})
+            return res.status(400).json({success: false, message: "Can not find watchhistories"})
         }
         return res.status(200).json({success: "get watch history successfully", watchHistories: watchhistories})
     } catch (error) {
@@ -61,7 +61,7 @@ export const deleteWatchHistory = async (req, res)=>{
         if(!watchHistory){
             return res.status(400).json({success: false, message: "Can not find watch history"})
         }
-        if(!userId !== watchHistory.userId){
+        if(userId !== watchHistory.userId.toString()){
             return res.status(400).json({success: false, message: "you are not author"})
         }
         await WatchHistory.findByIdAndDelete(watchHistoryId)

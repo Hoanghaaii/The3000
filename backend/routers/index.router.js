@@ -11,10 +11,16 @@ import purchaseRouter from '../routers/purchaseHistory.router.js'
 const router = express.Router();
 
 router.use("/auth", authRouter);
+
 router.use("/content", contentRouter);
+
 router.use("/profile", profileRouter);
+
 router.use('/watch-history', watchHistoryRouter)
+
 router.use('/rewards', rewardRoutter);
+
 router.use('/purchase-history', purchaseRouter)
+
 
 export default router

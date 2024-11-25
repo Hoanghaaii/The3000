@@ -8,6 +8,7 @@ import {
 const router = express.Router();
 
 router.post("/", verifyToken, addNoti);
+
 router.get("/get-noti", verifyToken, getNoti);
 // router.put("/update-noti", verifyToken, updateNoti)
 router.delete("/delete-noti", verifyToken, delNoti);
