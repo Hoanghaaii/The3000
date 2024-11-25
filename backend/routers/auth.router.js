@@ -6,10 +6,10 @@ import {uploadprofilePictureMiddleWare } from '../storage/cloudinary.js'
 const router = express.Router()
 
 router.post('/signup', signup)
+router.post('/login', login)
+router.get('/get-profile', verifyToken, checkver)
+// router.get('/get-profile', checkver)
 
-router.post('/login',login)
-
-router.get('/get-profile',verifyToken,checkver)
 
 router.get('/refresh-token', refreshAccessToken)
 
