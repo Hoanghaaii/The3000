@@ -63,8 +63,8 @@ export const getContent = async (req, res)=>{
             success: true,
             message: "Get content successfully",
             totalContents,
-            totalPages: totalPages,  // Tổng số trang
-            currentPage: page,  // Trang hiện tại
+            totalPages: totalPages, 
+            currentPage: page,
             contents,
         });
     } catch (error) {
