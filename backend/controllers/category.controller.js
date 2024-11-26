@@ -161,12 +161,18 @@ export const createJobs = async (req, res) => {
 // Read: Lấy danh sách nghề
 export const getJobs = async (req, res) => {
     try {
-        const jobs = await JobModel.find().populate('industry'); // Populate để lấy thông tin Ngành nghề
-        return res.status(200).json({ success: true, data: jobs });
+        const jobs = await JobModel.find().populate('industryId'); // Populate để lấy thông tin Ngành nghề
+        return res.status(200).json({ 
+            success: true, 
+            count: jobs.length,  // Thêm số lượng công việc
+            data: jobs,
+            
+        });
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message });
     }
 };
+
 
 // Read: Lấy nghề theo ID
 export const getJobById = async (req, res) => {
