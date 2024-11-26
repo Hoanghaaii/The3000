@@ -238,7 +238,7 @@ export const createModel = async (req, res) => {
 
         const newModel = new ModelModel({
             name,
-            job: job._id
+            jobId: job._id
         });
 
         await newModel.save();
@@ -247,6 +247,49 @@ export const createModel = async (req, res) => {
         return res.status(500).json({ success: false, message: error.message });
     }
 };
+
+//create multi model
+export const createMultiModel = async (req, res) => {
+    const { models } = req.body;
+
+    // Kiểm tra dữ liệu đầu vào
+    if (!Array.isArray(models) || models.length === 0) {
+        return res.status(400).json({ success: false, message: "Models must be an array with at least one item" });
+    }
+
+    try {
+        // Lấy tất cả jobId trong request body
+        const jobIds = models.map(model => model.jobId);
+        
+        // Kiểm tra xem tất cả jobId có hợp lệ không
+        const jobs = await JobModel.find({ '_id': { $in: jobIds } });
+        
+        // Nếu có jobId không hợp lệ, trả về lỗi
+        if (jobs.length !== jobIds.length) {
+            return res.status(400).json({ success: false, message: "Some job IDs are invalid" });
+        }
+
+        // Tạo một mảng chứa các Model mới
+        const newModels = models.map(model => ({
+            name: model.name,
+            job: model.jobId // jobId được kiểm tra là hợp lệ
+        }));
+
+        // Thêm tất cả các model vào database
+        const createdModels = await ModelModel.insertMany(newModels);
+
+        // Trả về kết quả
+        return res.status(201).json({
+            success: true,
+            message: `${createdModels.length} models created successfully`,
+            data: createdModels
+        });
+
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
+    }
+};
+
 
 // Read: Lấy danh sách mô hình
 export const getModels = async (req, res) => {
