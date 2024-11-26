@@ -178,7 +178,7 @@ export const getJobs = async (req, res) => {
 export const getJobById = async (req, res) => {
     const { id } = req.params;
     try {
-        const job = await JobModel.findById(id).populate('industry');
+        const job = await JobModel.findById(id).populate('industryId');
         if (!job) {
             return res.status(404).json({ success: false, message: "Job not found" });
         }
@@ -294,7 +294,7 @@ export const createMultiModel = async (req, res) => {
 // Read: Lấy danh sách mô hình
 export const getModels = async (req, res) => {
     try {
-        const models = await ModelModel.find().populate('job'); // Populate để lấy thông tin Nghề
+        const models = await ModelModel.find().populate('jobId'); // Populate để lấy thông tin Nghề
         return res.status(200).json({ success: true, data: models });
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message });
@@ -305,7 +305,7 @@ export const getModels = async (req, res) => {
 export const getModelById = async (req, res) => {
     const { id } = req.params;
     try {
-        const model = await ModelModel.findById(id).populate('job');
+        const model = await ModelModel.findById(id).populate('jobId');
         if (!model) {
             return res.status(404).json({ success: false, message: "Model not found" });
         }
@@ -379,7 +379,7 @@ export const createService = async (req, res) => {
 // Read: Lấy danh sách dịch vụ
 export const getServices = async (req, res) => {
     try {
-        const services = await ServiceModel.find().populate('model'); // Populate để lấy thông tin Mô hình
+        const services = await ServiceModel.find().populate('modelId'); // Populate để lấy thông tin Mô hình
         return res.status(200).json({ success: true, data: services });
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message });
@@ -390,7 +390,7 @@ export const getServices = async (req, res) => {
 export const getServiceById = async (req, res) => {
     const { id } = req.params;
     try {
-        const service = await ServiceModel.findById(id).populate('model');
+        const service = await ServiceModel.findById(id).populate('modelId');
         if (!service) {
             return res.status(404).json({ success: false, message: "Service not found" });
         }
