@@ -366,7 +366,7 @@ export const createService = async (req, res) => {
 
         const newService = new ServiceModel({
             name,
-            model: model._id
+            modelId: model._id
         });
 
         await newService.save();
